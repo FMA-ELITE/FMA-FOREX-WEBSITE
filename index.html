@@ -1,6 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <head>
+  <!-- Existing meta tags -->
+  <title>Your Website</title>
+  
+  <!-- ADD YOUR CSS HERE -->
+  <style>
+    .form-input {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #FFD700;
+      border-radius: 5px;
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+    
+    .status-message {
+      font-size: 14px;
+      margin-top: 15px;
+      min-height: 50px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forex Mastery Academy | Signals & Mentorship | Uganda</title>
@@ -471,7 +498,22 @@
         <p style="max-width: 600px; margin: 0 auto 30px; font-size: 18px;">
             Get my 150-page eBook with proven strategies for consistent profits
         </p>
-        <a href="<a href="<a href="tel:*185*1*0790103115*1000%23" class="btn">TEST PAYMENT</a>" class="btn">Confirm Payment</button>
+        <a href="<a href="<a href="<div class="pricing-box">
+  <h3>1 MONTH</h3>
+  <div class="price">50,000 UGX</div>
+  
+  <!-- Payment Form -->
+  <div id="payment-form-1month">
+    <input type="text" id="name-1month" placeholder="Full Name" class="form-input" required>
+    <input type="email" id="email-1month" placeholder="Email" class="form-input" required>
+    <button onclick="initiateMTNPayment(50000, '1month')" class="btn">
+      Pay via MTN Mobile Money
+    </button>
+  </div>
+  
+  <!-- Status Message -->
+  <p id="payment-status-1month" class="status-message"></p>
+</div>" class="btn">TEST PAYMENT</a>" class="btn">Confirm Payment</button>
   </div>
 
   <!-- Initial Pay Button -->
@@ -533,46 +575,46 @@
         }
     </script>
     <script>
-// Show form when Pay button is clicked
-function showPaymentForm(plan) {
-  document.getElementById(`payment-form-${plan}`).style.display = 'block';
-  document.getElementById(`payment-status-${plan}`).innerHTML = 
-    'Complete your details above';
-}
-
-// Process payment and send email
-async function processPayment(amount, plan) {
+function initiateMTNPayment(amount, plan) {
   const name = document.getElementById(`name-${plan}`).value;
   const email = document.getElementById(`email-${plan}`).value;
-  const phone = document.getElementById(`phone-${plan}`).value;
   const statusElement = document.getElementById(`payment-status-${plan}`);
   
   // Validate inputs
-  if (!name || !email || !phone) {
-    statusElement.innerHTML = '❌ Please fill all fields';
+  if (!name || !email) {
+    statusElement.innerHTML = '<span style="color:red;">Please fill all fields</span>';
     return;
   }
 
-  // Generate payment reference
-  const ref = 'FMA-' + plan + '-' + Date.now();
+  // Generate unique reference
+  const ref = `FMA-${plan}-${Date.now()}`;
   
-  // Show USSD prompt
-  statusElement.innerHTML = '⌛ Opening MTN payment...';
-  window.location.href = `tel:*185*1*0790103115*${amount}%23`;
+  // Create MTN payment link
+  const mtnLink = `momo://send?amount=${amount}&phone=0790103115&note=${ref}`;
   
-  // Send confirmation email (using free EmailJS service)
-  await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+  // Try app deep link first
+  window.location.href = mtnLink;
+  
+  // Fallback to USSD if app fails
+  setTimeout(() => {
+    if (!document.hidden) {
+      statusElement.innerHTML = 'Opening USSD...';
+      window.location.href = `tel:*185*1*0790103115*${amount}%23`;
+    }
+  }, 500);
+  
+  // Send confirmation email (using free EmailJS)
+  fetch('https://api.emailjs.com/api/v1.0/email/send', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      service_id: 'YOUR_EMAILJS_SERVICE_ID',
-      template_id: 'YOUR_TEMPLATE_ID',
-      user_id: 'YOUR_USER_ID',
+      service_id: 'your_service_id',
+      template_id: 'your_template_id',
+      user_id: 'your_user_id',
       template_params: {
         name: name,
         email: email,
         amount: amount,
-        plan: plan,
         reference: ref
       }
     })
@@ -580,8 +622,8 @@ async function processPayment(amount, plan) {
   
   // Update status
   statusElement.innerHTML = `
-    ✅ Payment initiated! Check your phone to complete.<br>
-    <small>A receipt was sent to ${email}</small>
+    <span style="color:green;">✓ Payment initiated!</span><br>
+    <small>Complete payment on your phone. Receipt sent to ${email}</small>
   `;
 }
 </script>
