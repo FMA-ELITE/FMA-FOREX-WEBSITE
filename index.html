@@ -541,5 +541,58 @@
             event.currentTarget.classList.add('active');
         }
     </script>
+    <script>
+// Show form when Pay button is clicked
+function showPaymentForm(plan) {
+  document.getElementById(`payment-form-${plan}`).style.display = 'block';
+  document.getElementById(`payment-status-${plan}`).innerHTML = 
+    'Complete your details above';
+}
+
+// Process payment and send email
+async function processPayment(amount, plan) {
+  const name = document.getElementById(`name-${plan}`).value;
+  const email = document.getElementById(`email-${plan}`).value;
+  const phone = document.getElementById(`phone-${plan}`).value;
+  const statusElement = document.getElementById(`payment-status-${plan}`);
+  
+  // Validate inputs
+  if (!name || !email || !phone) {
+    statusElement.innerHTML = '❌ Please fill all fields';
+    return;
+  }
+
+  // Generate payment reference
+  const ref = 'FMA-' + plan + '-' + Date.now();
+  
+  // Show USSD prompt
+  statusElement.innerHTML = '⌛ Opening MTN payment...';
+  window.location.href = `tel:*185*1*0790103115*${amount}%23`;
+  
+  // Send confirmation email (using free EmailJS service)
+  await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      service_id: 'YOUR_EMAILJS_SERVICE_ID',
+      template_id: 'YOUR_TEMPLATE_ID',
+      user_id: 'YOUR_USER_ID',
+      template_params: {
+        name: name,
+        email: email,
+        amount: amount,
+        plan: plan,
+        reference: ref
+      }
+    })
+  });
+  
+  // Update status
+  statusElement.innerHTML = `
+    ✅ Payment initiated! Check your phone to complete.<br>
+    <small>A receipt was sent to ${email}</small>
+  `;
+}
+</script>
 </body>
 </html>
