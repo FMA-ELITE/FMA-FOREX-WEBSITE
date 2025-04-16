@@ -1,0 +1,44 @@
+import os
+from flask import Flask, request, jsonify
+import africastalking
+
+app = Flask(__name__)
+
+# Initialize Africa's Talking with error handling
+try:
+    africastalking.initialize(
+        username=os.getenv('AT_USERNAME'),
+        api_key=os.getenv('AT_API_KEY'),
+        environment="production"
+    )
+    payments = africastalking.Payment
+except Exception as e:
+    print(f"Failed to initialize AT: {str(e)}")
+
+@app.route('/pay', methods=['POST'])
+def handle_payment():
+    try:
+        data = request.get_json()
+        if not data or 'phone' not in data or 'amount' not in data:
+            return jsonify({'status': 'error', 'message': 'Missing parameters'}), 400
+
+        response = payments.mobile_checkout(
+            product_name=f"FMA_{data.get('plan', 'default')}",
+            phone_number=data['phone'],
+            currency_code="UGX",
+            amount=str(data['amount']),
+            metadata=data.get('metadata', {})
+        )
+        return jsonify({
+            'status': 'success',
+            'transaction_id': response['transactionId']
+        })
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+@app.route('/')
+def health_check():
+    return jsonify({'status': 'active', 'service': 'FMA Payments'})
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=10000)  # Must use port 10000 on Render
