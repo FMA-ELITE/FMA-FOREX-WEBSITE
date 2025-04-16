@@ -1,43 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    <head>
-  <!-- Existing meta tags -->
-  <title>Your Website</title>
-  
-  <!-- ADD YOUR CSS HERE -->
-  <style>
-    .form-input {
-      display: block;
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border: 1px solid #FFD700;
-      border-radius: 5px;
-      background: rgba(255,255,255,0.1);
-      color: white;
-    }
-    
-    .status-message {
-      font-size: 14px;
-      margin-top: 15px;
-      min-height: 50px;
-      line-height: 1.5;
-    }
-  </style>
-</head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forex Mastery Academy | Signals & Mentorship | Uganda</title>
+    <title>Forex Mastery Academy | MTN Mobile Money Payments</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --gold: #FFD700;
             --dark: #1A1A2E;
             --blue: #16213E;
             --green: #2ECC71;
-            --purple: #9B59B6;
+            --red: #E74C3C;
         }
         
         body {
@@ -49,7 +23,7 @@
             line-height: 1.6;
         }
         
-        /* Header with logo */
+        /* Header */
         .header {
             background: linear-gradient(135deg, var(--blue), #0F3460);
             padding: 40px 20px;
@@ -88,93 +62,49 @@
             padding: 20px;
         }
         
-        /* Navigation Tabs */
-        .tabs {
-            display: flex;
-            justify-content: center;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-        
-        .tab-btn {
-            padding: 12px 25px;
-            background: rgba(255, 215, 0, 0.2);
-            color: var(--gold);
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            margin: 5px;
-        }
-        
-        .tab-btn.active {
-            background: var(--gold);
-            color: black;
-        }
-        
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.5s;
-        }
-        
-        .tab-content.active {
+        /* Form Styles */
+        .form-input {
             display: block;
+            width: 100%;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border: 1px solid var(--gold);
+            border-radius: 5px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 16px;
         }
         
-        /* Pricing Cards */
-        .pricing-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-            margin: 50px 0;
+        .form-input:focus {
+            outline: none;
+            border-color: var(--green);
+            box-shadow: 0 0 5px rgba(46, 204, 113, 0.5);
         }
         
-        .pricing-card {
+        .status-message {
+            font-size: 14px;
+            margin-top: 15px;
+            min-height: 50px;
+            line-height: 1.5;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        /* Pricing Box */
+        .pricing-box {
             background: rgba(26, 26, 46, 0.9);
             border: 2px solid var(--gold);
             border-radius: 15px;
             padding: 30px;
-            width: 300px;
-            position: relative;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 400px;
+            margin: 50px auto;
+            text-align: center;
         }
         
-        .pricing-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--green);
-            box-shadow: 0 15px 40px rgba(46, 204, 113, 0.2);
-        }
-        
-        .badge {
-            position: absolute;
-            top: -15px;
-            right: 20px;
-            background: var(--purple);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 14px;
-        }
-        
-        .badge.gold {
-            background: var(--gold);
-            color: black;
-        }
-        
-        .badge.green {
-            background: var(--green);
-        }
-        
-        .plan-name {
+        .pricing-box h3 {
             color: var(--gold);
             font-size: 24px;
             margin-top: 0;
-            border-bottom: 2px solid var(--gold);
-            padding-bottom: 10px;
         }
         
         .price {
@@ -184,44 +114,13 @@
             color: var(--green);
         }
         
-        .installment {
-            font-size: 16px;
-            color: #aaa;
-            margin-bottom: 20px;
-        }
-        
-        .features {
-            margin: 25px 0;
-            padding-left: 20px;
-        }
-        
-        .features li {
-            margin-bottom: 12px;
-            position: relative;
-            padding-left: 25px;
-        }
-        
-        .features li::before {
-            content: "✓";
-            color: var(--green);
-            position: absolute;
-            left: 0;
-            font-weight: bold;
-        }
-        
-        .highlight {
-            background: rgba(46, 204, 113, 0.2);
-            padding: 3px 8px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-        
+        /* Button Styles */
         .btn {
             display: inline-block;
             background: var(--gold);
             color: black;
             padding: 15px 30px;
-            margin-top: 15px;
+            margin-top: 20px;
             border-radius: 8px;
             font-weight: bold;
             text-decoration: none;
@@ -240,55 +139,11 @@
             box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
         }
         
-        .btn.purple {
-            background: var(--purple);
-            color: white;
-        }
-        
-        .btn.purple:hover {
-            background: #8e44ad;
-        }
-        
-        /* Testimonials */
-        .testimonials {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            margin: 60px 0;
-        }
-        
-        .testimonial-card {
-            background: rgba(22, 33, 62, 0.8);
-            border-left: 3px solid var(--gold);
-            padding: 25px;
-            width: 280px;
-            border-radius: 5px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .testimonial-card p {
-            font-style: italic;
-            margin-bottom: 15px;
-        }
-        
-        .testimonial-card strong {
-            color: var(--gold);
-        }
-        
-        /* Footer */
-        footer {
-            background: var(--blue);
-            padding: 30px;
-            text-align: center;
-            margin-top: 60px;
-            backdrop-filter: blur(2px);
-        }
-        
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
         
         /* Responsive */
@@ -299,21 +154,20 @@
                 margin: 0 auto 20px;
             }
             
-            .pricing-card {
-                width: 90%;
+            .header {
+                padding: 30px 15px;
             }
             
-            .header {
-                padding: 30px 20px;
+            .pricing-box {
+                width: 90%;
+                padding: 20px;
             }
         }
     </style>
 </head>
 <body>
     <header class="header">
-        <!-- Replace with your actual logo -->
         <img src="fma logo.jpg" alt="Forex Mastery Academy Logo" class="logo">
-        
         <div class="container">
             <h1>FOREX MASTERY ACADEMY</h1>
             <p>Professional Trading Signals & Personalized Mentorship</p>
@@ -321,264 +175,116 @@
     </header>
 
     <div class="container">
-        <!-- Main Navigation Tabs -->
-        <div class="tabs">
-            <button class="tab-btn active" onclick="openTab('signals')">Forex Signals</button>
-            <button class="tab-btn" onclick="openTab('mentorship')">Mentorship</button>
-            <button class="tab-btn" onclick="openTab('community')">Community</button>
-        </div>
-        
-        <!-- SIGNALS TAB -->
-        <div id="signals" class="tab-content active">
-            <h2 style="text-align: center; margin-bottom: 30px;">VIP FOREX SIGNALS PLANS</h2>
-            <p style="text-align: center; max-width: 800px; margin: 0 auto 40px;">Receive daily high-probability trading signals with precise entry/exit points, risk management guidance, and WhatsApp support.</p>
+        <div class="pricing-box">
+            <h3>1 MONTH SIGNALS</h3>
+            <div class="price">50,000 UGX</div>
             
-            <div class="pricing-container">
-                <!-- 1 MONTH PLAN -->
-<div class="pricing-card">
-    <h3 class="plan-name">1 Month</h3>
-    <div class="price">50,000 UGX</div>
-    <div class="installment">or 2 installments of 25,000 UGX</div>
-    <ul class="features">
-        <li>3-5 signals per day (Mon-Fri)</li>
-        <li>Basic WhatsApp support</li>
-        <li>Entry/Exit/Target levels</li>
-        <li>Daily market updates</li>
-    </ul>
-    <button onclick="initiateMomoPayment('1month', 50000, 'VIP Signals (1 Month)')" class="btn">
-       SUBSCRIBE
-    </button>
-    <p id="1month-status" class="status-message"></p>
-</div>
-
-<!-- 3 MONTHS PLAN -->
-<div class="pricing-card">
-    <div class="badge green">BEST VALUE</div>
-    <h3 class="plan-name">3 Months</h3>
-    <div class="price">110,000 UGX</div>
-    <div class="installment">or 2 installments of 55,000 UGX</div>
-    <ul class="features">
-        <li>All 1-month features</li>
-        <li>Priority support</li>
-        <li>Weekly market analysis</li>
-        <li>Risk management guide</li>
-    </ul>
-    <button onclick="initiateMomoPayment('3months', 110000, 'VIP Signals (3 Months)')" class="btn">
-        PAY WITH MOBILE MONEY
-    </button>
-    <p id="3months-status" class="status-message"></p>
-</div>
-
-<!-- LIFETIME PLAN -->
-<div class="pricing-card" style="border-color: var(--purple);">
-    <div class="badge gold">LIMITED OFFER</div>
-    <h3 class="plan-name" style="color: var(--purple);">Lifetime</h3>
-    <div class="price">1,000,000 UGX</div>
-    <div class="installment">One-time payment</div>
-    <ul class="features">
-        <li>Unlimited signal access</li>
-        <li>24/7 VIP support</li>
-        <li>Personal trading coach</li>
-    </ul>
-    <button onclick="initiateMomoPayment('lifetime', 1000000, 'VIP Signals (Lifetime)')" class="btn purple">
-        PAY WITH MOBILE MONEY
-    </button>
-    <p id="lifetime-status" class="status-message"></p>
-</div>
-        
-        <!-- MENTORSHIP TAB -->
-        <div id="mentorship" class="tab-content">
-            <h2 style="text-align: center; margin-bottom: 30px;">1-ON-1 MENTORSHIP PROGRAMS</h2>
-            <p style="text-align: center; max-width: 800px; margin: 0 auto 40px;">Transform from beginner to confident trader with our personalized coaching programs tailored to your skill level.</p>
+            <!-- Payment Form (initially hidden) -->
+            <div id="payment-form" style="display: none;">
+                <input type="text" id="customer-name" class="form-input" placeholder="Full Name" required>
+                <input type="email" id="customer-email" class="form-input" placeholder="Email Address" required>
+                <input type="tel" id="customer-phone" class="form-input" placeholder="Phone Number (e.g., 0755123456)" required>
+                
+                <button id="pay-button" class="btn" onclick="initiateMTNPayment()">
+                    Complete MTN Mobile Money Payment
+                </button>
+                
+                <p id="payment-status" class="status-message"></p>
+            </div>
             
-            <div class="pricing-container">
-                <!-- BEGINNER FOUNDATION -->
-<div class="pricing-card">
-    <h3 class="plan-name">Beginner Foundation</h3>
-    <div class="price">750,000 UGX</div>
-    <div class="installment">or 4 installments of 200,000 UGX</div>
-    <ul class="features">
-        <li>3 months training</li>
-        <li>12 private sessions</li>
-    </ul>
-    <button onclick="initiateMomoPayment('beginner', 750000, 'Beginner Mentorship')" class="btn">
-        PAY WITH MOBILE MONEY
-    </button>
-    <p id="beginner-status" class="status-message"></p>
-</div>
-
-<!-- INTERMEDIATE ACCELERATOR -->
-<div class="pricing-card">
-    <div class="badge green">MOST POPULAR</div>
-    <h3 class="plan-name">Intermediate Accelerator</h3>
-    <div class="price">450,000 UGX</div>
-    <div class="installment">or 3 installments of 160,000 UGX</div>
-    <ul class="features">
-        <li>1.5 months training</li>
-        <li>6 private sessions</li>
-    </ul>
-    <button onclick="initiateMomoPayment('intermediate', 450000, 'Intermediate Mentorship')" class="btn">
-        PAY WITH MOBILE MONEY
-    </button>
-    <p id="intermediate-status" class="status-message"></p>
-</div>
-        
-        <!-- COMMUNITY TAB -->
-        <div id="community" class="tab-content">
-            <h2 style="text-align: center; margin-bottom: 30px;">COMMUNITY TRADING PROGRAM</h2>
-            <p style="text-align: center; max-width: 800px; margin: 0 auto 40px;">Join our vibrant trading community for group learning, live sessions, and collaborative growth.</p>
-            
-            <div class="pricing-container">
-                <!-- BEGINNER COMMUNITY -->
-<div class="pricing-card">
-    <h3 class="plan-name">Beginner Community</h3>
-    <div class="price">500,000 UGX</div>
-    <div class="installment">or 3 installments of 180,000 UGX</div>
-    <ul class="features">
-        <li>3 months access</li>
-        <li>Bi-weekly workshops</li>
-    </ul>
-    <button onclick="initiateMomoPayment('beginner-comm', 500000, 'Beginner Community')" class="btn">
-        PAY WITH MOBILE MONEY
-    </button>
-    <p id="beginner-comm-status" class="status-message"></p>
-</div>
-
-        <!-- eBook Section -->
-<section id="ebook" style="background: rgba(22, 33, 62, 0.7); padding: 40px 0; margin: 60px 0; text-align: center;">
-    <div class="container">
-        <h2>MASTER TRADING EBOOK</h2>
-        <p style="max-width: 600px; margin: 0 auto 30px; font-size: 18px;">
-            Get my 150-page eBook with proven strategies for consistent profits
-        </p>
-        <a href="<a href="<a href="<div class="pricing-box">
-  <h3>1 MONTH</h3>
-  <div class="price">50,000 UGX</div>
-  
-  <!-- Payment Form -->
-  <div id="payment-form-1month">
-    <input type="text" id="name-1month" placeholder="Full Name" class="form-input" required>
-    <input type="email" id="email-1month" placeholder="Email" class="form-input" required>
-    <button onclick="initiateMTNPayment(50000, '1month')" class="btn">
-      Pay via MTN Mobile Money
-    </button>
-  </div>
-  
-  <!-- Status Message -->
-  <p id="payment-status-1month" class="status-message"></p>
-</div>" class="btn">TEST PAYMENT</a>" class="btn">Confirm Payment</button>
-  </div>
-
-  <!-- Initial Pay Button -->
-  <button onclick="showPaymentForm('1month')" class="btn">Pay via MTN</button>
-  
-  <!-- Status Message -->
-  <p id="payment-status-1month" style="font-size:14px; margin-top:10px;"></p>
-</div>" class="btn">TEST PAYMENT</a>" 
-           class="btn" 
-           style="background: var(--purple); color: white; max-width: 300px; margin: 0 auto;">
-            GET EBOOK (20,000 UGX)
-        </a>
-    </div>
-</section>
-        
-        <!-- TESTIMONIALS SECTION -->
-        <h2 style="text-align: center; margin-top: 60px;">WHAT OUR MEMBERS SAY</h2>
-        <div class="testimonials">
-            <div class="testimonial-card">
-                <p>"The signals service helped me grow my account by 120% in just 2 months. The accuracy is incredible!"</p>
-                <strong>— Robert, Kampala</strong>
-            </div>
-            <div class="testimonial-card">
-                <p>"My mentor transformed my trading completely. I went from losing money to consistent profits in 3 months."</p>
-                <strong>— Sarah, Entebbe</strong>
-            </div>
-            <div class="testimonial-card">
-                <p>"The community support is invaluable. I've learned more here than in years of studying on my own."</p>
-                <strong>— David, Jinja</strong>
-            </div>
+            <!-- Initial Pay Button -->
+            <button id="show-form-button" class="btn" onclick="showPaymentForm()">
+                Pay via MTN Mobile Money
+            </button>
         </div>
     </div>
-
-    <footer>
-        <div class="container">
-            <p>Contact: +256 702 523 892 | WhatsApp available 24/7</p>
-            <p>Email: info@forexmasteryug.com</p>
-            <p>© 2023 Forex Mastery Academy Uganda. All rights reserved.</p>
-        </div>
-    </footer>
 
     <script>
-        function openTab(tabName) {
-            // Hide all tab contents
-            const tabContents = document.getElementsByClassName('tab-content');
-            for (let i = 0; i < tabContents.length; i++) {
-                tabContents[i].classList.remove('active');
+        // Show payment form when pay button is clicked
+        function showPaymentForm() {
+            document.getElementById('payment-form').style.display = 'block';
+            document.getElementById('show-form-button').style.display = 'none';
+        }
+        
+        // Initiate MTN Mobile Money payment
+        function initiateMTNPayment() {
+            const name = document.getElementById('customer-name').value.trim();
+            const email = document.getElementById('customer-email').value.trim();
+            const phone = document.getElementById('customer-phone').value.trim();
+            const statusElement = document.getElementById('payment-status');
+            
+            // Validate inputs
+            if (!name || !email || !phone) {
+                statusElement.innerHTML = '<span style="color:var(--red);">Please fill all fields</span>';
+                return;
             }
             
-            // Remove active class from all tab buttons
-            const tabButtons = document.getElementsByClassName('tab-btn');
-            for (let i = 0; i < tabButtons.length; i++) {
-                tabButtons[i].classList.remove('active');
+            // Validate Ugandan phone number
+            if (!/^(0|256|\+256)(7|3)\d{8}$/.test(phone)) {
+                statusElement.innerHTML = '<span style="color:var(--red);">Please enter a valid Ugandan phone number</span>';
+                return;
             }
             
-            // Show current tab and mark button as active
-            document.getElementById(tabName).classList.add('active');
-            event.currentTarget.classList.add('active');
+            // Format phone number
+            const formattedPhone = formatPhoneNumber(phone);
+            const amount = 50000; // 50,000 UGX
+            const recipient = "0790103115";
+            const reference = `FMA-${Date.now().toString().slice(-6)}`;
+            
+            // Show processing status
+            statusElement.innerHTML = 'Processing your payment...';
+            
+            // Disable button during processing
+            const payButton = document.getElementById('pay-button');
+            payButton.disabled = true;
+            payButton.innerHTML = 'Processing...';
+            
+            // Create MTN payment deep link
+            const mtnLink = `momo://send?phone=${recipient}&amount=${amount}&note=${encodeURIComponent(reference)}`;
+            
+            // Try to open MTN MoMo app
+            window.location.href = mtnLink;
+            
+            // Fallback to USSD if app doesn't open
+            setTimeout(() => {
+                if (!document.hidden) {
+                    window.location.href = `tel:*165*3*1*${recipient}*${amount}%23`;
+                }
+            }, 1000);
+            
+            // Simulate payment confirmation (in real app, use webhook)
+            setTimeout(() => {
+                statusElement.innerHTML = `
+                    <span style="color:var(--green);">✓ Payment initiated successfully!</span><br>
+                    <small>Complete the payment on your phone. Confirmation will be sent to ${email}</small>
+                `;
+                payButton.disabled = false;
+                payButton.innerHTML = 'Complete MTN Mobile Money Payment';
+                
+                // In a real implementation, you would:
+                // 1. Verify payment via API/webhook
+                // 2. Send confirmation email
+                // 3. Grant access to service
+            }, 3000);
+        }
+        
+        // Format phone number to standard format
+        function formatPhoneNumber(phone) {
+            // Remove any non-digit characters
+            let cleaned = phone.replace(/\D/g, '');
+            
+            // Convert to local format if it starts with country code
+            if (cleaned.startsWith('256')) {
+                cleaned = '0' + cleaned.slice(3);
+            }
+            
+            // Ensure it's 10 digits starting with 0
+            if (cleaned.length === 9 && !cleaned.startsWith('0')) {
+                cleaned = '0' + cleaned;
+            }
+            
+            return cleaned;
         }
     </script>
-    <script>
-function initiateMTNPayment(amount, plan) {
-  const name = document.getElementById(`name-${plan}`).value;
-  const email = document.getElementById(`email-${plan}`).value;
-  const statusElement = document.getElementById(`payment-status-${plan}`);
-  
-  // Validate inputs
-  if (!name || !email) {
-    statusElement.innerHTML = '<span style="color:red;">Please fill all fields</span>';
-    return;
-  }
-
-  // Generate unique reference
-  const ref = `FMA-${plan}-${Date.now()}`;
-  
-  // Create MTN payment link
-  const mtnLink = `momo://send?amount=${amount}&phone=0790103115&note=${ref}`;
-  
-  // Try app deep link first
-  window.location.href = mtnLink;
-  
-  // Fallback to USSD if app fails
-  setTimeout(() => {
-    if (!document.hidden) {
-      statusElement.innerHTML = 'Opening USSD...';
-      window.location.href = `tel:*185*1*0790103115*${amount}%23`;
-    }
-  }, 500);
-  
-  // Send confirmation email (using free EmailJS)
-  fetch('https://api.emailjs.com/api/v1.0/email/send', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      service_id: 'your_service_id',
-      template_id: 'your_template_id',
-      user_id: 'your_user_id',
-      template_params: {
-        name: name,
-        email: email,
-        amount: amount,
-        reference: ref
-      }
-    })
-  });
-  
-  // Update status
-  statusElement.innerHTML = `
-    <span style="color:green;">✓ Payment initiated!</span><br>
-    <small>Complete payment on your phone. Receipt sent to ${email}</small>
-  `;
-}
-</script>
 </body>
 </html>
