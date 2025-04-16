@@ -335,51 +335,56 @@
             
             <div class="pricing-container">
                 <!-- 1 MONTH PLAN -->
-                <div class="pricing-card">
-                    <h3 class="plan-name">1 Month</h3>
-                    <div class="price">50,000 UGX</div>
-                    <ul class="features">
-                        <li>3-5 signals per day (Mon-Fri)</li>
-                        <li>Basic WhatsApp support</li>
-                        <li>Entry/Exit/Target levels</li>
-                        <li>Daily market updates</li>
-                    </ul>
-                    <a href="https://store.pesapal.com/shop/0ovdyr-forexmasteryacademyfma?productCode=756696c6-9d40-4192-a17b-5f0d48aa9044" class="btn" target="_blank" rel="noopener">SUBSCRIBE NOW</a>
-                </div>
-                
-                <!-- 3 MONTHS PLAN -->
-                <div class="pricing-card">
-                    <div class="badge green">BEST VALUE</div>
-                    <h3 class="plan-name">3 Months</h3>
-                    <div class="price">110,000 UGX</div>
-                    <div class="installment">Save 27% vs monthly</div>
-                    <ul class="features">
-                        <li>All 1-month features</li>
-                        <li>Priority support</li>
-                        <li>Weekly market analysis</li>
-                        <li>Risk management guide</li>
-                        <li>Exclusive webinar access</li>
-                    </ul>
-                    <a href="https://store.pesapal.com/shop/0ovdyr-forexmasteryacademyfma?productCode=908eaf63-cae6-480e-9d78-8574439b4a6c" class="btn" target="_blank" rel="noopener">SUBSCRIBE NOW</a>
-                </div>
-                
-                <!-- LIFETIME PLAN -->
-                <div class="pricing-card" style="border-color: var(--purple);">
-                    <div class="badge gold">LIMITED OFFER</div>
-                    <h3 class="plan-name" style="color: var(--purple);">Lifetime</h3>
-                    <div class="price">1,000,000 UGX</div>
-                    <div class="installment">One-time payment</div>
-                    <ul class="features">
-                        <li>Unlimited signal access</li>
-                        <li>24/7 VIP support</li>
-                        <li>Personal trading coach</li>
-                        <li>Advanced strategies</li>
-                        <li>All future updates included</li>
-                    </ul>
-                    <a href="https://store.pesapal.com/shop/0ovdyr-forexmasteryacademyfma?productCode=abe551d1-da06-4c5b-9c64-380497c86cfb" class="btn purple" target="_blank" rel="noopener">GET LIFETIME ACCESS</a>
-                </div>
-            </div>
-        </div>
+<div class="pricing-card">
+    <h3 class="plan-name">1 Month</h3>
+    <div class="price">50,000 UGX</div>
+    <div class="installment">or 2 installments of 25,000 UGX</div>
+    <ul class="features">
+        <li>3-5 signals per day (Mon-Fri)</li>
+        <li>Basic WhatsApp support</li>
+        <li>Entry/Exit/Target levels</li>
+        <li>Daily market updates</li>
+    </ul>
+    <button onclick="initiateMomoPayment('1month', 50000, 'VIP Signals (1 Month)')" class="btn">
+        PAY WITH MOBILE MONEY
+    </button>
+    <p id="1month-status" class="status-message"></p>
+</div>
+
+<!-- 3 MONTHS PLAN -->
+<div class="pricing-card">
+    <div class="badge green">BEST VALUE</div>
+    <h3 class="plan-name">3 Months</h3>
+    <div class="price">110,000 UGX</div>
+    <div class="installment">or 2 installments of 55,000 UGX</div>
+    <ul class="features">
+        <li>All 1-month features</li>
+        <li>Priority support</li>
+        <li>Weekly market analysis</li>
+        <li>Risk management guide</li>
+    </ul>
+    <button onclick="initiateMomoPayment('3months', 110000, 'VIP Signals (3 Months)')" class="btn">
+        PAY WITH MOBILE MONEY
+    </button>
+    <p id="3months-status" class="status-message"></p>
+</div>
+
+<!-- LIFETIME PLAN -->
+<div class="pricing-card" style="border-color: var(--purple);">
+    <div class="badge gold">LIMITED OFFER</div>
+    <h3 class="plan-name" style="color: var(--purple);">Lifetime</h3>
+    <div class="price">1,000,000 UGX</div>
+    <div class="installment">One-time payment</div>
+    <ul class="features">
+        <li>Unlimited signal access</li>
+        <li>24/7 VIP support</li>
+        <li>Personal trading coach</li>
+    </ul>
+    <button onclick="initiateMomoPayment('lifetime', 1000000, 'VIP Signals (Lifetime)')" class="btn purple">
+        PAY WITH MOBILE MONEY
+    </button>
+    <p id="lifetime-status" class="status-message"></p>
+</div>
         
         <!-- MENTORSHIP TAB -->
         <div id="mentorship" class="tab-content">
