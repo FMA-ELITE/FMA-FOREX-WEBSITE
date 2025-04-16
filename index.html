@@ -392,55 +392,36 @@
             <p style="text-align: center; max-width: 800px; margin: 0 auto 40px;">Transform from beginner to confident trader with our personalized coaching programs tailored to your skill level.</p>
             
             <div class="pricing-container">
-                <!-- BEGINNER PLAN -->
-                <div class="pricing-card">
-                    <h3 class="plan-name">Beginner Foundation</h3>
-                    <div class="price">750,000 UGX</div>
-                    <div class="installment">or 4 installments of 200,000 UGX</div>
-                    <ul class="features">
-                        <li><span class="highlight">3 months</span> comprehensive training</li>
-                        <li>12 <span class="highlight">private 1-on-1 sessions</span></li>
-                        <li>Market fundamentals mastery</li>
-                        <li>Technical analysis from scratch</li>
-                        <li>Psychological training modules</li>
-                        <li>24/7 WhatsApp support</li>
-                    </ul>
-                    <a href="https://store.pesapal.com/shop/0ovdyr-forexmasteryacademyfma?productCode=0e2d2e42-7c27-4e2a-b123-58089b740d33" class="btn" target="_blank" rel="noopener">ENROLL NOW</a>
-                </div>
-                
-                <!-- INTERMEDIATE PLAN -->
-                <div class="pricing-card">
-                    <div class="badge green">MOST POPULAR</div>
-                    <h3 class="plan-name">Intermediate Accelerator</h3>
-                    <div class="price">450,000 UGX</div>
-                    <div class="installment">or 3 installments of 160,000 UGX</div>
-                    <ul class="features">
-                        <li><span class="highlight">1.5 months</span> intensive training</li>
-                        <li>6 <span class="highlight">private 1-on-1 sessions</span></li>
-                        <li>Advanced chart pattern mastery</li>
-                        <li>Risk management framework</li>
-                        <li><span class="highlight">Live trading</span> demonstrations</li>
-                    </ul>
-                    <a href="https://store.pesapal.com/shop/0ovdyr-forexmasteryacademyfma?productCode=e443cff0-71bc-427a-b32a-f187740e15e7" class="btn" target="_blank" rel="noopener">ENROLL NOW</a>
-                </div>
-                
-                <!-- LIFETIME PLAN -->
-                <div class="pricing-card" style="border-color: var(--purple);">
-                    <div class="badge gold">BEST VALUE</div>
-                    <h3 class="plan-name" style="color: var(--purple);">Lifetime Mastery</h3>
-                    <div class="price">1,200,000 UGX</div>
-                    <div class="installment">or 6 installments of 220,000 UGX</div>
-                    <ul class="features">
-                        <li><span class="highlight">Lifetime access</span> to all materials</li>
-                        <li><span class="highlight">Unlimited 1-on-1 sessions</span> (monthly)</li>
-                        <li>All beginner + intermediate content</li>
-                        <li>Advanced algorithmic trading</li>
-                        <li>Portfolio management strategies</li>
-                    </ul>
-                    <a href="https://store.pesapal.com/shop/0ovdyr-forexmasteryacademyfma?productCode=49699d8f-9cab-4049-9572-c26ea0644113" class="btn purple" target="_blank" rel="noopener">ENROLL NOW</a>
-                </div>
-            </div>
-        </div>
+                <!-- BEGINNER FOUNDATION -->
+<div class="pricing-card">
+    <h3 class="plan-name">Beginner Foundation</h3>
+    <div class="price">750,000 UGX</div>
+    <div class="installment">or 4 installments of 200,000 UGX</div>
+    <ul class="features">
+        <li>3 months training</li>
+        <li>12 private sessions</li>
+    </ul>
+    <button onclick="initiateMomoPayment('beginner', 750000, 'Beginner Mentorship')" class="btn">
+        PAY WITH MOBILE MONEY
+    </button>
+    <p id="beginner-status" class="status-message"></p>
+</div>
+
+<!-- INTERMEDIATE ACCELERATOR -->
+<div class="pricing-card">
+    <div class="badge green">MOST POPULAR</div>
+    <h3 class="plan-name">Intermediate Accelerator</h3>
+    <div class="price">450,000 UGX</div>
+    <div class="installment">or 3 installments of 160,000 UGX</div>
+    <ul class="features">
+        <li>1.5 months training</li>
+        <li>6 private sessions</li>
+    </ul>
+    <button onclick="initiateMomoPayment('intermediate', 450000, 'Intermediate Mentorship')" class="btn">
+        PAY WITH MOBILE MONEY
+    </button>
+    <p id="intermediate-status" class="status-message"></p>
+</div>
         
         <!-- COMMUNITY TAB -->
         <div id="community" class="tab-content">
@@ -449,52 +430,19 @@
             
             <div class="pricing-container">
                 <!-- BEGINNER COMMUNITY -->
-                <div class="pricing-card">
-                    <h3 class="plan-name">Beginner Community</h3>
-                    <div class="price">500,000 UGX</div>
-                    <div class="installment">or 3 installments of 180,000 UGX</div>
-                    <ul class="features">
-                        <li><span class="highlight">3 months</span> structured learning</li>
-                        <li>Bi-weekly <span class="highlight">live workshops</span></li>
-                        <li>Beginner-friendly content library</li>
-                        <li>Daily market updates</li>
-                        <li>Private Telegram group access</li>
-                    </ul>
-                    <a href="https://store.pesapal.com/shop/0ovdyr-forexmasteryacademyfma?productCode=d8b032f7-59db-4c8a-8b77-18408602f9b5" class="btn" target="_blank" rel="noopener">JOIN COMMUNITY</a>
-                </div>
-                
-                <!-- INTERMEDIATE COMMUNITY -->
-                <div class="pricing-card">
-                    <div class="badge">POPULAR</div>
-                    <h3 class="plan-name">Pro Community</h3>
-                    <div class="price">300,000 UGX</div>
-                    <div class="installment">or 2 installments of 160,000 UGX</div>
-                    <ul class="features">
-                        <li><span class="highlight">1.5 months</span> group training</li>
-                        <li>Weekly <span class="highlight">live Q&A sessions</span></li>
-                        <li>Advanced strategy discussions</li>
-                        <li>Weekly market analysis reports</li>
-                        <li>Collaborative trade ideas</li>
-                    </ul>
-                    <a href="https://store.pesapal.com/shop/0ovdyr-forexmasteryacademyfma?productCode=dce779d5-5c33-4024-b6a0-d3fe5e995004" class="btn" target="_blank" rel="noopener">JOIN COMMUNITY</a>
-                </div>
-                
-                <!-- LIFETIME COMMUNITY -->
-                <div class="pricing-card" style="border-color: var(--purple);">
-                    <h3 class="plan-name" style="color: var(--purple);">Lifetime Community</h3>
-                    <div class="price">800,000 UGX</div>
-                    <div class="installment">or 5 installments of 170,000 UGX</div>
-                    <ul class="features">
-                        <li><span class="highlight">Lifetime access</span> to community</li>
-                        <li>All current and future courses</li>
-                        <li>Monthly <span class="highlight">mastermind sessions</span></li>
-                        <li>Exclusive trading tools</li>
-                        <li>Private Discord server access</li>
-                    </ul>
-                    <a href="https://store.pesapal.com/shop/0ovdyr-forexmasteryacademyfma?productCode=dbf691b5-3e86-4950-9f16-e56fb455f287" class="btn purple" target="_blank" rel="noopener">JOIN COMMUNITY</a>
-                </div>
-            </div>
-        </div>
+<div class="pricing-card">
+    <h3 class="plan-name">Beginner Community</h3>
+    <div class="price">500,000 UGX</div>
+    <div class="installment">or 3 installments of 180,000 UGX</div>
+    <ul class="features">
+        <li>3 months access</li>
+        <li>Bi-weekly workshops</li>
+    </ul>
+    <button onclick="initiateMomoPayment('beginner-comm', 500000, 'Beginner Community')" class="btn">
+        PAY WITH MOBILE MONEY
+    </button>
+    <p id="beginner-comm-status" class="status-message"></p>
+</div>
 
         <!-- eBook Section -->
 <section id="ebook" style="background: rgba(22, 33, 62, 0.7); padding: 40px 0; margin: 60px 0; text-align: center;">
