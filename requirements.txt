@@ -1,4 +1,4 @@
 flask==2.3.2
-africastalking==3.0.0
+africastalking==1.2.9  # Last confirmed working version
 gunicorn==20.1.0
 python-dotenv==1.0.0
