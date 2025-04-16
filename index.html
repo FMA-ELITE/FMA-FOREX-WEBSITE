@@ -608,113 +608,169 @@
         </div>
     </footer>
 
-    <script>
-        // Tab navigation
-        function openTab(tabName) {
-            // Hide all tab contents
-            const tabContents = document.getElementsByClassName('tab-content');
-            for (let i = 0; i < tabContents.length; i++) {
-                tabContents[i].classList.remove('active');
-            }
-            
-            // Remove active class from all tab buttons
-            const tabButtons = document.getElementsByClassName('tab-btn');
-            for (let i = 0; i < tabButtons.length; i++) {
-                tabButtons[i].classList.remove('active');
-            }
-            
-            // Show current tab and mark button as active
-            document.getElementById(tabName).classList.add('active');
-            event.currentTarget.classList.add('active');
+    <!-- In your existing HTML file, update the script section with this complete implementation -->
+
+<script>
+    // Tab navigation
+    function openTab(tabName) {
+        // Hide all tab contents
+        const tabContents = document.getElementsByClassName('tab-content');
+        for (let i = 0; i < tabContents.length; i++) {
+            tabContents[i].classList.remove('active');
         }
         
-        // Show payment form for specific plan
-        function showPaymentForm(planId, amount) {
-            // Hide all payment forms first
-            const allForms = document.querySelectorAll('.payment-form');
-            allForms.forEach(form => {
-                form.style.display = 'none';
+        // Remove active class from all tab buttons
+        const tabButtons = document.getElementsByClassName('tab-btn');
+        for (let i = 0; i < tabButtons.length; i++) {
+            tabButtons[i].classList.remove('active');
+        }
+        
+        // Show current tab and mark button as active
+        document.getElementById(tabName).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+    
+    // Show payment form for specific plan
+    function showPaymentForm(planId, amount) {
+        // Hide all payment forms first
+        const allForms = document.querySelectorAll('.payment-form');
+        allForms.forEach(form => {
+            form.style.display = 'none';
+        });
+        
+        // Show the selected payment form
+        const formToShow = document.getElementById('payment-form-' + planId);
+        formToShow.style.display = 'block';
+        
+        // Scroll to the form
+        formToShow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    
+    // Initiate Africa's Talking payment
+    async function initiatePayment(planId, amount) {
+        const name = document.getElementById('name-' + planId).value.trim();
+        const email = document.getElementById('email-' + planId).value.trim();
+        const phone = document.getElementById('phone-' + planId).value.trim();
+        const statusElement = document.getElementById('payment-status-' + planId);
+        const payButton = document.querySelector(`#payment-form-${planId} .btn`);
+        
+        // Validate inputs
+        if (!name || !email || !phone) {
+            statusElement.innerHTML = '<span style="color:var(--red);">Please fill all fields</span>';
+            return;
+        }
+        
+        // Validate Ugandan phone number
+        if (!/^(0|256|\+256)(7|3)\d{8}$/.test(phone)) {
+            statusElement.innerHTML = '<span style="color:var(--red);">Please enter a valid Ugandan phone number</span>';
+            return;
+        }
+        
+        // Format phone number
+        const formattedPhone = formatPhoneNumber(phone);
+        const productName = document.querySelector(`#${planId.replace('payment-form-', '')} .plan-name`).textContent;
+        const reference = `FMA-${planId}-${Date.now().toString().slice(-6)}`;
+        
+        // Show processing status
+        statusElement.innerHTML = 'Processing your payment...';
+        payButton.disabled = true;
+        payButton.innerHTML = '<span class="spinner"></span> Processing...';
+        
+        try {
+            // Call your backend API to initiate payment
+            const response = await fetch('/api/initiate-payment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    phoneNumber: formattedPhone,
+                    amount: amount,
+                    currencyCode: 'UGX',
+                    productName: productName,
+                    customerName: name,
+                    customerEmail: email,
+                    metadata: {
+                        planId: planId,
+                        reference: reference
+                    }
+                })
             });
             
-            // Show the selected payment form
-            const formToShow = document.getElementById('payment-form-' + planId);
-            formToShow.style.display = 'block';
+            const data = await response.json();
             
-            // Scroll to the form
-            formToShow.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-        
-        // Initiate MTN Mobile Money payment
-        function initiateMTNPayment(planId, amount) {
-            const name = document.getElementById('name-' + planId).value.trim();
-            const email = document.getElementById('email-' + planId).value.trim();
-            const phone = document.getElementById('phone-' + planId).value.trim();
-            const statusElement = document.getElementById('payment-status-' + planId);
-            
-            // Validate inputs
-            if (!name || !email || !phone) {
-                statusElement.innerHTML = '<span style="color:var(--red);">Please fill all fields</span>';
-                return;
-            }
-            
-            // Validate Ugandan phone number
-            if (!/^(0|256|\+256)(7|3)\d{8}$/.test(phone)) {
-                statusElement.innerHTML = '<span style="color:var(--red);">Please enter a valid Ugandan phone number</span>';
-                return;
-            }
-            
-            // Format phone number
-            const formattedPhone = formatPhoneNumber(phone);
-            const recipient = "0790103115"; // Your MTN number
-            const reference = `FMA-${planId}-${Date.now().toString().slice(-6)}`;
-            
-            // Show processing status
-            statusElement.innerHTML = 'Processing your payment...';
-            
-            // Create MTN payment deep link
-            const mtnLink = `momo://send?phone=${recipient}&amount=${amount}&note=${encodeURIComponent(reference)}`;
-            
-            // Try to open MTN MoMo app
-            window.location.href = mtnLink;
-            
-            // Fallback to USSD if app doesn't open
-            setTimeout(() => {
-                if (!document.hidden) {
-                    window.location.href = `tel:*165*3*1*${recipient}*${amount}%23`;
-                }
-            }, 1000);
-            
-            // Simulate payment confirmation (in real app, use webhook)
-            setTimeout(() => {
+            if (data.success) {
                 statusElement.innerHTML = `
-                    <span style="color:var(--green);">✓ Payment initiated successfully!</span><br>
-                    <small>Complete the payment on your phone. Confirmation will be sent to ${email}</small>
+                    <span style="color:var(--green);">✓ Payment request sent!</span><br>
+                    <small>Check your phone to complete payment. Confirmation will be sent to ${email}</small>
                 `;
                 
-                // In a real implementation, you would:
-                // 1. Verify payment via API/webhook
-                // 2. Send confirmation email
-                // 3. Grant access to service
-            }, 3000);
+                // Poll for payment status (in real implementation, use webhooks)
+                pollPaymentStatus(planId, data.transactionId);
+            } else {
+                statusElement.innerHTML = `<span style="color:var(--red);">Error: ${data.message}</span>`;
+                payButton.disabled = false;
+                payButton.innerHTML = '<i class="fas fa-mobile-alt"></i> Pay with Mobile Money';
+            }
+        } catch (error) {
+            console.error('Payment error:', error);
+            statusElement.innerHTML = `<span style="color:var(--red);">Network error. Please try again.</span>`;
+            payButton.disabled = false;
+            payButton.innerHTML = '<i class="fas fa-mobile-alt"></i> Pay with Mobile Money';
+        }
+    }
+    
+    // Poll for payment status (temporary solution - use webhooks in production)
+    async function pollPaymentStatus(planId, transactionId) {
+        const statusElement = document.getElementById('payment-status-' + planId);
+        const maxAttempts = 10;
+        let attempts = 0;
+        
+        const checkStatus = async () => {
+            attempts++;
+            try {
+                const response = await fetch(`/api/check-payment/${transactionId}`);
+                const data = await response.json();
+                
+                if (data.status === 'Success') {
+                    statusElement.innerHTML = `
+                        <span style="color:var(--green);">✓ Payment confirmed!</span><br>
+                        <small>Transaction ID: ${transactionId}. Access details have been sent to your email.</small>
+                    `;
+                    // Here you would redirect to success page or grant access
+                } else if (attempts < maxAttempts) {
+                    setTimeout(checkStatus, 3000); // Check again after 3 seconds
+                } else {
+                    statusElement.innerHTML += `<br><span style="color:var(--red);">Payment verification timeout. Please contact support.</span>`;
+                }
+            } catch (error) {
+                console.error('Status check error:', error);
+                if (attempts < maxAttempts) {
+                    setTimeout(checkStatus, 3000);
+                }
+            }
+        };
+        
+        setTimeout(checkStatus, 3000);
+    }
+    
+    // Format phone number to standard format
+    function formatPhoneNumber(phone) {
+        // Remove any non-digit characters
+        let cleaned = phone.replace(/\D/g, '');
+        
+        // Convert to local format if it starts with country code
+        if (cleaned.startsWith('256')) {
+            cleaned = '0' + cleaned.slice(3);
         }
         
-        // Format phone number to standard format
-        function formatPhoneNumber(phone) {
-            // Remove any non-digit characters
-            let cleaned = phone.replace(/\D/g, '');
-            
-            // Convert to local format if it starts with country code
-            if (cleaned.startsWith('256')) {
-                cleaned = '0' + cleaned.slice(3);
-            }
-            
-            // Ensure it's 10 digits starting with 0
-            if (cleaned.length === 9 && !cleaned.startsWith('0')) {
-                cleaned = '0' + cleaned;
-            }
-            
-            return cleaned;
+        // Ensure it's 10 digits starting with 0
+        if (cleaned.length === 9 && !cleaned.startsWith('0')) {
+            cleaned = '0' + cleaned;
         }
-    </script>
+        
+        return cleaned;
+    }
+</script>
 </body>
 </html>
