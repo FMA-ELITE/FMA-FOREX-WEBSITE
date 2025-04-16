@@ -6,31 +6,57 @@ from africastalking.payment import PaymentService
 
 app = Flask(__name__)
 
-# Initialize Africa's Talking (v1.x syntax)
-username = os.getenv('AT_USERNAME')
-api_key = os.getenv('AT_API_KEY')
-
-sms = SMSService(username, api_key)
-voice = VoiceService(username, api_key)
-payments = PaymentService(username, api_key)
+# Initialize with error handling
+try:
+    username = os.getenv('AT_USERNAME')
+    api_key = os.getenv('AT_API_KEY')
+    
+    if not username or not api_key:
+        raise ValueError("Missing AT credentials in environment variables")
+    
+    payments = PaymentService(username, api_key)
+    print("✓ Africa's Talking initialized successfully")
+except Exception as e:
+    print(f"!! Failed to initialize AT: {str(e)}")
+    payments = None  # This will cause intentional errors if not configured
 
 @app.route('/pay', methods=['POST'])
 def handle_payment():
+    if not payments:
+        return jsonify({"status": "error", "message": "Payment service not initialized"}), 500
+        
     try:
         data = request.get_json()
+        
+        # Required fields validation
+        required = ['product_name', 'phone', 'amount']
+        if not all(field in data for field in required):
+            return jsonify({"status": "error", "message": f"Missing fields: {required}"}), 400
+        
+        # Process payment
         response = payments.mobile_checkout(
             product_name=data['product_name'],
             phone_number=data['phone'],
             currency_code="UGX",
-            amount=data['amount'],
+            amount=str(data['amount']),
             metadata=data.get('metadata', {})
         )
+        
         return jsonify({
-            'status': 'success',
-            'transaction_id': response['transactionId']
+            "status": "success",
+            "transaction_id": response['transactionId']
         })
+        
     except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)}), 500
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route('/health', methods=['GET'])
+def health_check():
+    return jsonify({
+        "status": "active",
+        "service": "FMA Payments",
+        "at_configured": bool(payments)
+    })
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=10000)
+    app.run(host='0.0.0.0', port=10000)  # Must use port 10000 for Render
