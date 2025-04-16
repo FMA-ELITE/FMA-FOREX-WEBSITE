@@ -6,36 +6,34 @@ from africastalking.payment import PaymentService
 
 app = Flask(__name__)
 
-# Initialize with error handling
+# Enhanced initialization
 try:
-    username = os.getenv('AT_USERNAME')
-    api_key = os.getenv('AT_API_KEY')
+    username = os.environ.get('AT_USERNAME')
+    api_key = os.environ.get('AT_API_KEY')
     
     if not username or not api_key:
-        raise ValueError("Missing AT credentials in environment variables")
+        raise RuntimeError("Missing Africa's Talking credentials in environment variables")
     
     payments = PaymentService(username, api_key)
-    print("✓ Africa's Talking initialized successfully")
+    print("✅ Africa's Talking initialized successfully")
 except Exception as e:
-    print(f"!! Failed to initialize AT: {str(e)}")
-    payments = None  # This will cause intentional errors if not configured
+    print(f"❌ AT Initialization failed: {str(e)}")
+    payments = None
 
 @app.route('/pay', methods=['POST'])
 def handle_payment():
     if not payments:
-        return jsonify({"status": "error", "message": "Payment service not initialized"}), 500
+        return jsonify({"status": "error", "message": "Payment service unavailable"}), 503
         
     try:
         data = request.get_json()
         
-        # Required fields validation
-        required = ['product_name', 'phone', 'amount']
-        if not all(field in data for field in required):
-            return jsonify({"status": "error", "message": f"Missing fields: {required}"}), 400
-        
-        # Process payment
+        # Strict validation
+        if not data or 'phone' not in data or 'amount' not in data:
+            return jsonify({"status": "error", "message": "Missing phone/amount"}), 400
+            
         response = payments.mobile_checkout(
-            product_name=data['product_name'],
+            product_name=data.get('product_name', 'FMA_Payment'),
             phone_number=data['phone'],
             currency_code="UGX",
             amount=str(data['amount']),
@@ -43,20 +41,20 @@ def handle_payment():
         )
         
         return jsonify({
-            "status": "success",
+            "status": "success", 
             "transaction_id": response['transactionId']
         })
         
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
 
-@app.route('/health', methods=['GET'])
+@app.route('/health')
 def health_check():
     return jsonify({
-        "status": "active",
-        "service": "FMA Payments",
-        "at_configured": bool(payments)
+        "status": "running",
+        "port": 10000,
+        "at_ready": bool(payments)
     })
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=10000)  # Must use port 10000 for Render
+    app.run(host='0.0.0.0', port=10000, debug=False)  # Debug MUST be False in production
