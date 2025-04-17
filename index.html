@@ -611,42 +611,23 @@
     <!-- In your existing HTML file, update the script section with this complete implementation -->
 
 <script>
-    // Tab navigation
+    // Tab navigation remains the same
     function openTab(tabName) {
-        // Hide all tab contents
         const tabContents = document.getElementsByClassName('tab-content');
         for (let i = 0; i < tabContents.length; i++) {
             tabContents[i].classList.remove('active');
         }
         
-        // Remove active class from all tab buttons
         const tabButtons = document.getElementsByClassName('tab-btn');
         for (let i = 0; i < tabButtons.length; i++) {
             tabButtons[i].classList.remove('active');
         }
         
-        // Show current tab and mark button as active
         document.getElementById(tabName).classList.add('active');
         event.currentTarget.classList.add('active');
     }
-    
-    // Show payment form for specific plan
-    function showPaymentForm(planId, amount) {
-        // Hide all payment forms first
-        const allForms = document.querySelectorAll('.payment-form');
-        allForms.forEach(form => {
-            form.style.display = 'none';
-        });
-        
-        // Show the selected payment form
-        const formToShow = document.getElementById('payment-form-' + planId);
-        formToShow.style.display = 'block';
-        
-        // Scroll to the form
-        formToShow.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-    
-    // Initiate Africa's Talking payment
+
+    // Simplified DPO Payment Integration
     async function initiatePayment(planId, amount) {
         const name = document.getElementById('name-' + planId).value.trim();
         const email = document.getElementById('email-' + planId).value.trim();
@@ -660,116 +641,61 @@
             return;
         }
         
-        // Validate Ugandan phone number
-        if (!/^(0|256|\+256)(7|3)\d{8}$/.test(phone)) {
-            statusElement.innerHTML = '<span style="color:var(--red);">Please enter a valid Ugandan phone number</span>';
-            return;
-        }
-        
-        // Format phone number
-        const formattedPhone = formatPhoneNumber(phone);
-        const productName = document.querySelector(`#${planId.replace('payment-form-', '')} .plan-name`).textContent;
-        const reference = `FMA-${planId}-${Date.now().toString().slice(-6)}`;
+        // Format phone (256...)
+        const formattedPhone = phone.replace(/^0/, '256');
         
         // Show processing status
-        statusElement.innerHTML = 'Processing your payment...';
+        statusElement.innerHTML = 'Creating payment link...';
         payButton.disabled = true;
-        payButton.innerHTML = '<span class="spinner"></span> Processing...';
         
         try {
-            // Call your backend API to initiate payment
-            const response = await fetch('/api/initiate-payment', {
+            // Generate DPO payment link
+            const response = await fetch('https://secure.3gdirectpay.com/API/v6/', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    phoneNumber: formattedPhone,
-                    amount: amount,
-                    currencyCode: 'UGX',
-                    productName: productName,
-                    customerName: name,
-                    customerEmail: email,
-                    metadata: {
-                        planId: planId,
-                        reference: reference
-                    }
+                    CompanyToken: '9AC2695A-8119-4981-AD42-E5072D82BF1F',
+                    Request: "createToken",
+                    ServiceType: "MTN_MOBILE_MONEY_UG",
+                    Phone: formattedPhone,
+                    Amount: amount,
+                    Currency: "UGX",
+                    CustomerName: name,
+                    CustomerEmail: email,
+                    Reference: `FMA-${planId}-${Date.now().toString().slice(-6)}`
                 })
             });
             
             const data = await response.json();
             
-            if (data.success) {
-                statusElement.innerHTML = `
-                    <span style="color:var(--green);">✓ Payment request sent!</span><br>
-                    <small>Check your phone to complete payment. Confirmation will be sent to ${email}</small>
-                `;
-                
-                // Poll for payment status (in real implementation, use webhooks)
-                pollPaymentStatus(planId, data.transactionId);
+            if (data.TransToken) {
+                // Redirect to DPO payment page
+                window.location.href = `https://secure.3gdirectpay.com/payv2.php?ID=${data.TransToken}`;
             } else {
-                statusElement.innerHTML = `<span style="color:var(--red);">Error: ${data.message}</span>`;
+                statusElement.innerHTML = `<span style="color:var(--red);">Error: ${data.ResultExplanation || 'Payment failed'}</span>`;
                 payButton.disabled = false;
-                payButton.innerHTML = '<i class="fas fa-mobile-alt"></i> Pay with Mobile Money';
             }
         } catch (error) {
-            console.error('Payment error:', error);
             statusElement.innerHTML = `<span style="color:var(--red);">Network error. Please try again.</span>`;
             payButton.disabled = false;
-            payButton.innerHTML = '<i class="fas fa-mobile-alt"></i> Pay with Mobile Money';
+            console.error(error);
         }
     }
-    
-    // Poll for payment status (temporary solution - use webhooks in production)
-    async function pollPaymentStatus(planId, transactionId) {
-        const statusElement = document.getElementById('payment-status-' + planId);
-        const maxAttempts = 10;
-        let attempts = 0;
+
+    // Update all payment buttons to use this function
+    function showPaymentForm(planId, amount) {
+        const allForms = document.querySelectorAll('.payment-form');
+        allForms.forEach(form => form.style.display = 'none');
         
-        const checkStatus = async () => {
-            attempts++;
-            try {
-                const response = await fetch(`/api/check-payment/${transactionId}`);
-                const data = await response.json();
-                
-                if (data.status === 'Success') {
-                    statusElement.innerHTML = `
-                        <span style="color:var(--green);">✓ Payment confirmed!</span><br>
-                        <small>Transaction ID: ${transactionId}. Access details have been sent to your email.</small>
-                    `;
-                    // Here you would redirect to success page or grant access
-                } else if (attempts < maxAttempts) {
-                    setTimeout(checkStatus, 3000); // Check again after 3 seconds
-                } else {
-                    statusElement.innerHTML += `<br><span style="color:var(--red);">Payment verification timeout. Please contact support.</span>`;
-                }
-            } catch (error) {
-                console.error('Status check error:', error);
-                if (attempts < maxAttempts) {
-                    setTimeout(checkStatus, 3000);
-                }
-            }
-        };
+        const formToShow = document.getElementById('payment-form-' + planId);
+        formToShow.style.display = 'block';
+        formToShow.scrollIntoView({ behavior: 'smooth', block: 'center' });
         
-        setTimeout(checkStatus, 3000);
-    }
-    
-    // Format phone number to standard format
-    function formatPhoneNumber(phone) {
-        // Remove any non-digit characters
-        let cleaned = phone.replace(/\D/g, '');
-        
-        // Convert to local format if it starts with country code
-        if (cleaned.startsWith('256')) {
-            cleaned = '0' + cleaned.slice(3);
-        }
-        
-        // Ensure it's 10 digits starting with 0
-        if (cleaned.length === 9 && !cleaned.startsWith('0')) {
-            cleaned = '0' + cleaned;
-        }
-        
-        return cleaned;
+        // Update button onclick handlers
+        const payButtons = formToShow.querySelectorAll('.btn');
+        payButtons.forEach(btn => {
+            btn.onclick = () => initiatePayment(planId, amount);
+        });
     }
 </script>
 </body>
