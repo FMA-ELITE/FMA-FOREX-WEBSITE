@@ -698,5 +698,29 @@
         });
     }
 </script>
+<script>
+// WhatsApp Payment Function for ALL PLANS
+function initiateWhatsAppPayment(planId, amount, planName) {
+  const refCode = `FMA-${planId}-${Math.random().toString(36).substring(2,6).toUpperCase()}`;
+  
+  const message = `*FOREX MASTERY ACADEMY PAYMENT*\n\n` +
+                 `Plan: ${planName}\n` +
+                 `Amount: ${amount.toLocaleString()} UGX\n` +
+                 `Ref: ${refCode}\n\n` +
+                 `_PAYMENT STEPS:_\n` +
+                 `1. Send to:\n` +
+                 `   - MTN: *256790103115*\n` +
+                 `   - Airtel: *256790103115*\n` +
+                 `2. Reply with:\n` +
+                 `   - Last 4 digits of sender number\n` +
+                 `   - Transaction ID (e.g. MM12345)\n\n` +
+                 `Access granted within 15 mins of confirmation.`;
+
+  window.open(`https://wa.me/256702523892?text=${encodeURIComponent(message)}`, '_blank');
+  
+  // Optional: Log to console for testing
+  console.log(`Initiated ${planName} payment: UGX ${amount}`);
+}
+</script>
 </body>
 </html>
