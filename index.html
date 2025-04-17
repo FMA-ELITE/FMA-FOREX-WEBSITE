@@ -722,5 +722,42 @@ function initiateWhatsAppPayment(planId, amount, planName) {
   console.log(`Initiated ${planName} payment: UGX ${amount}`);
 }
 </script>
+    <script>
+    // Tab navigation
+    function openTab(tabName) {
+        const tabContents = document.getElementsByClassName('tab-content');
+        for (let i = 0; i < tabContents.length; i++) {
+            tabContents[i].classList.remove('active');
+        }
+        
+        const tabButtons = document.getElementsByClassName('tab-btn');
+        for (let i = 0; i < tabButtons.length; i++) {
+            tabButtons[i].classList.remove('active');
+        }
+        
+        document.getElementById(tabName).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    // WhatsApp Payment Function
+    function initiateWhatsAppPayment(planId, amount, planName) {
+        const refCode = `FMA${Math.random().toString(36).substring(2,6).toUpperCase()}`;
+        
+        const message = `*FOREX MASTERY PAYMENT*\n\n` +
+                     `Plan: ${planName}\n` +
+                     `Amount: ${amount.toLocaleString()} UGX\n` +
+                     `Ref: ${refCode}\n\n` +
+                     `_INSTRUCTIONS:_\n` +
+                     `1. Send to:\n` +
+                     `   - MTN: *256790103115*\n` +
+                     `   - Airtel: *256790103115*\n` +
+                     `2. Reply with:\n` +
+                     `   - Last 4 digits\n` +
+                     `   - Transaction ID (e.g. MM12345)\n\n` +
+                     `Access granted within 15 mins.`;
+        
+        window.open(`https://wa.me/256702523892?text=${encodeURIComponent(message)}`, '_blank');
+    }
+</script>
 </body>
 </html>
