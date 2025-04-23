@@ -319,6 +319,75 @@
                 padding: 30px 20px;
             }
         }
+
+        /* ===== Professional Payment Buttons ===== */
+.payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.payment-options .btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.payment-options .btn-main {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.payment-options .btn-sub {
+    font-size: 13px;
+    font-weight: normal;
+    opacity: 0.9;
+    margin-top: 4px;
+}
+
+.btn-full {
+    background: var(--green);
+    color: white;
+}
+
+.btn-full:hover {
+    background: #27ae60;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+}
+
+.btn-installment {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+}
+
+.btn-installment:hover {
+    background: rgba(255, 215, 0, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2);
+}
+
+.installment-option {
+    font-size: 15px;
+    color: #aaa;
+    margin: 5px 0 15px;
+    text-align: center;
+}
+
+.installment-option strong {
+    color: var(--gold);
+}
     </style>
 </head>
 <body>
@@ -449,7 +518,8 @@
     <div class="badge green">MOST POPULAR</div>
     <h3 class="plan-name">Intermediate Accelerator</h3>
     <div class="price">450,000 UGX</div>
-    <div class="installment">or 3 installments of 160,000 UGX</div>
+    <div class="installment-option">or <strong>3 installments</strong> of 160,000 UGX</div>
+    
     <ul class="features">
         <li><span class="highlight">1.5 months</span> intensive training</li>
         <li>6 <span class="highlight">private 1-on-1 sessions</span></li>
@@ -457,11 +527,18 @@
         <li>Risk management framework</li>
         <li><span class="highlight">Live trading</span> demonstrations</li>
     </ul>
-    <a href="https://selar.co/2f11h4" class="btn" target="_blank">ENROLL WITH SELAR</a>
-    
-    <!-- (Optional) Keep mobile money form if needed -->
-    <div id="payment-form-intermediate" class="payment-form" style="display:none;">
-        [...]
+
+    <!-- Professional Payment Buttons Container -->
+    <div class="payment-options">
+        <a href="https://selar.co/2f11h4" class="btn btn-full" target="_blank">
+            <span class="btn-main">Pay Full Amount</span>
+            <span class="btn-sub">450,000 UGX (Save 30,000 UGX)</span>
+        </a>
+        
+        <a href="https://selar.co/544154" class="btn btn-installment" target="_blank">
+            <span class="btn-main">Start With Installment</span>
+            <span class="btn-sub">160,000 UGX × 3 months</span>
+        </a>
     </div>
 </div>
                 
